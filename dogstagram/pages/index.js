@@ -15,9 +15,9 @@ const Index = (props) => {
         <script src="https://kit.fontawesome.com/73150d13e4.js" crossorigin="anonymous"></script>
       </Head>
 
-      <Navbar />
+      <Navbar onClick={loadRandomDogs}/>
 
-      <Scrollbox dogs={props.dogs}/>
+      <Scrollbox dogs={props.dogs} onClick={loadRandomDogs}/>
 
     </div>
   )
@@ -31,6 +31,9 @@ Index.getInitialProps = async function () {
   return {
     dogs: dogs
   }
+}
+const loadRandomDogs = () => {
+  console.log('random dogs clicked')
 }
 
 export default Index;

@@ -5,13 +5,22 @@ function Post(props) {
         textAlign: 'left',
         overflow: 'hidden',
         fontFamily: 'Times',
-        border: '2px solid black',
-        padding: '10px 5px',
+        border: '1px solid black',
+        paddingTop: '10px',
         marginBottom: '25px'
     }
+    const titleContainer = {
+        display: 'flex',
+        flexDirection: 'row',
+        fontFamily: 'Grand Hotel',
+        fontSize: 'x-large',
+        paddingLeft: '15px'
+    }
     const imgContainerStyle = {
-        padding: ' 10px 0',
-
+        padding: '0 0 10px 0',
+    }
+    const postStyle = {
+        padding: '0 5px 5px 5px',
     }
     const imgStyle = {
         margin: '0 auto',
@@ -28,8 +37,14 @@ function Post(props) {
     const iconStyle = {
         padding: '5px 5px',
         color: 'white',
-        backgroundColor: "black",
+        backgroundColor: 'black',
         borderRadius: '25px'
+    }
+    const doggieIcon = {
+        width: 'auto',
+        height: '25px',
+        borderRadius: '100%',
+        margin: '5px 5px'
     }
     return (
         <div>
@@ -37,11 +52,18 @@ function Post(props) {
                     return (
                     <div key={dog.id}>
                         <div className="post-container" style={postContainerStyle}>
+                            <div className="title-container" style={titleContainer}>
+                                <img style={doggieIcon} src={dog.url}/>
+                                {dog.breeds.map(dog => (
+                                    <div key={dog.id} >
+                                        <p>{dog.name}</p>
+                                    </div>
+                                ))}
+                            </div>
                             <div className="image-container" style={imgContainerStyle}>
                                 <img style={imgStyle} src={dog.url}/>
                             </div>
-                            <div className="post-title">
-                                {dog.name}
+                            <div className="post-body" style={postStyle}>
                                 {dog.breeds.map(dog => (
                                     <div key={dog.id} >
                                         <p>{dog.name}, bred for {dog.bred_for}. Typically {dog.temperament ? (dog.temperament).toString().toLowerCase() : ''}</p>
@@ -49,9 +71,7 @@ function Post(props) {
                                 ))}
                             </div>
                             <div className="bottom-bar" style={bottomBar}>
-                                <i className="fas fa-heart fa-2x" style={iconStyle}></i>
-                                <i className="far fa-comment fa-2x" style={iconStyle}></i>
-                                <i className="fas fa-share fa-2x" style={iconStyle}></i>
+                                <i aria-hidden className="fas fa-heart fa-2x" style={iconStyle}></i>
                             </div>
                         </div>
                         
