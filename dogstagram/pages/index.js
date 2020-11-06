@@ -24,9 +24,17 @@ const Index = (props) => {
 }
 
 Index.getInitialProps = async function () {
-  const res = await fetch('https://api.thedogapi.com/v1/images/search?limit=5&page=10&order=Desc');
+  const key = process.env.dogAPIkey;
+  const res = await fetch('https://api.thedogapi.com/v1/breeds/search?attach_breed=pug&page=1&limit=10', {
+    method: 'GET',
+    headers: ({
+      'Accept': 'application/json',
+      "Content-type": 'application/json',
+      "x-api-key": key,
+    })
+  });
+  // console.log('============' + key + '===============');
   const dogs = await res.json();
-  console.log(process.env.dogAPIKey);
   console.log(dogs);
   return {
     dogs: dogs
@@ -37,3 +45,22 @@ const loadRandomDogs = () => {
 }
 
 export default Index;
+
+// WORKING FOR FETCH ALL
+// fetch random
+// https://api.thedogapi.com/v1/breeds/search?limit=10&page=10&order=Desc
+// single image search
+// https://api.thedogapi.com/v1/images/search
+// search for static images
+// https://api.thedogapi.com/images/search?mime_types=jpg,png
+// breed list
+// https://api.thedogapi.com/v1/breeds
+// breed list
+// https://api.thedogapi.com/v1/breeds?attach_breed=0
+// find staffies
+// https://api.thedogapi.com/v1/breeds/search?q=staf
+// get by breed_id
+// https://api.thedogapi.com/v1/images/search?breed_ids=1&limit=10
+
+// NOT WORKING
+// https://api.thedogapi.com/v1/breeds/search?attach_breed=beng&page=1&limit=10
