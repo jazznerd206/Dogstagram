@@ -14,7 +14,7 @@ function Navbar(props) {
             <nav className="navbar navbar-expand-med navbar-light bg-light" style={navStyle}>
                 <a className="navbar-brand" href="/"><h1>Dogstagram</h1></a>
                 <div className="navbar navbar-right">
-                    <a className="navbar-brand" href="/">Random Dogs</a>
+                    <a className="navbar-brand" onClick={props.onClick}>Random Dogs</a>
                     <a className="navbar-brand" href="#">My Dogs</a>
                 </div>
                 </nav>
