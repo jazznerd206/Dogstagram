@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import Post from './Post.js'
 
 function BreedSelector(props) {
 
+    const listStyle = {
+        listStyle: 'none',
+        maxHeight: '250px',
+        width: '400px',
+        maxWidth: '300px',
+        overflowY: 'scroll',
+        border: '1px solid black',
+        borderTop: 'none',
+    }
+
     const [ showList, setShowList ] = useState(false)
     const [ breeds, setBreeds ] = useState([]);
+    const [ breedSelected, setBreedSelected ] = useState('');
+    const [ single, setSingleDog ] = useState();
 
     const showBreeds = () => {
         if (showList === false) {
@@ -25,9 +38,35 @@ function BreedSelector(props) {
             })
             });
             const breeds = await res.json();
-            console.log(breeds);
             setBreeds(breeds);
         }
+
+    const findBreed = async (dogBreed) => {
+        console.log(dogBreed);
+        // if (dogBreed.includes(' ') === true) {
+        //     dogBreed = dogBreed.toLowerCase().split(' ').join('%20');
+        // } else {
+        //     dogBreed = dogBreed.toLowerCase()
+        // }
+        console.log(`dog breed after modification ${dogBreed}`)
+        const key = process.env.dogAPIkey;
+        let query = 'https://api.thedogapi.com/v1/images/search?limit=10&breed_id=';
+        query += dogBreed;
+        console.log(query)
+        const res = await fetch(query, {
+        method: 'GET',
+        headers: ({
+            'Accept': 'application/json',
+            "Content-type": 'application/json',
+            "x-api-key": key,
+        })
+        });
+        const dog = await res.json();
+        setSingleDog(dog);
+    }
+
+
+
     useEffect(() => {
         getBreeds();
     }, [])
@@ -35,23 +74,36 @@ function BreedSelector(props) {
     return (
         <div>
             <div onClick={showBreeds}>
-                Show List
+                <h2>Breed List</h2>
             </div>
-            <ul>
-            {showList === true ?
+            <ul style={listStyle}>
+                {/* {showList === true ?
+                    (
+                        <div> */}
+                            {breeds.map((breed, index) => (
+                                <li 
+                                    value={breed.name}
+                                    key={breed.id}
+                                    onClick={e => findBreed(index + 1)}
+                                >
+                                    {breed.name}
+                                </li>
+                            ))}
+                        {/* </div>
+                    ) : (
+                        null
+                    )
+                } */}
+            </ul>
+            {single ? 
             (
                 <div>
-                    {breeds.map(breed => (
-                        <li key={breed.id}>
-                            {breed.name}
-                        </li>
-                ))}
+                    <Post dogs={single}/>
                 </div>
             ) : (
                 null
             )
         }
-        </ul>
         </div>
     )
 }
