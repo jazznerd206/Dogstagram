@@ -2,12 +2,23 @@ import React, { useState, useEffect } from 'react';
 import fetch from 'isomorphic-unfetch';
 import Head from 'next/head';
 import Navbar from '../components/Navbar.js';
+import BreedSelector from '../components/BreedSelector.js';
 import Scrollbox from '../components/Scrollbox.js';
 import styles from '../styles/Home.module.css';
 
 const Index = (props) => {
 
-  const [dogs, setDogs] = useState([]);
+  const [ dogs, setDogs ] = useState([]);
+  const [ loading, setLoading ] = useState(true);
+  const [ data, setData ] = useState({});
+
+  const fetchData = async () => {
+    const response = await fetch('http://localhost:3000/api/hello')
+    const res = await response.json();
+    // console.log(res)
+    setData(res);
+    return res;
+  }
 
   const loadRandomDogs = async () => {
     const key = process.env.dogAPIkey;
@@ -31,10 +42,11 @@ const Index = (props) => {
   async function loadDogs(event) {
     event.preventDefault();
     const data = await loadRandomDogs();
-    console.log(data);
+    // console.log(data);
   }
   useEffect(() => {
     loadRandomDogs();
+    fetchData();
   }, [])
 
   return (
@@ -47,7 +59,11 @@ const Index = (props) => {
         <script src="https://kit.fontawesome.com/73150d13e4.js" crossOrigin="anonymous"></script>
       </Head>
 
+      {props.data}
+
       <Navbar onClick={loadDogs}/>
+
+      <BreedSelector />
 
       <Scrollbox dogs={dogs}/>
 
@@ -55,26 +71,6 @@ const Index = (props) => {
   )
 }
 
-
-
-// export async function getStaticProps() {
-//   const key = process.env.dogAPIkey;
-//   const res = await fetch('https://api.thedogapi.com/v1/images/search?mime_types=jpg,png&limit=10', {
-//     method: 'GET',
-//     headers: ({
-//       'Accept': 'application/json',
-//       "Content-type": 'application/json',
-//       "x-api-key": key,
-//     })
-//   });
-//   const dogs = await res.json();
-//   // console.log(dogs);
-//   return {
-//     props: {
-//       dogs: dogs
-//     }
-//   }
-// }
 
 export default Index;
 
