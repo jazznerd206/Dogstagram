@@ -5,7 +5,9 @@ function Navbar(props) {
         paddingLeft: '250px',
         paddingRight: '250px',
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        borderBottom: '1px solid grey',
+        backgroundColor: '#FFFFFF'
     }
     const linkStyle = {
         paddingRight: '25px'
@@ -15,8 +17,8 @@ function Navbar(props) {
     }
 
     return (
-        <div className="pb-sm-5">
-            <nav className="navbar navbar-expand-med navbar-light bg-light" style={navStyle}>
+        <div>
+            <nav className="navbar navbar-expand-med" style={navStyle}>
                 <div className="navbar navbar-left">
                     <i aria-hidden className="fab fa-instagram fa-2x"></i>
                     <a className="navbar-brand" href="/"><h1 style={leftSpacing}>Dogstagram</h1></a>

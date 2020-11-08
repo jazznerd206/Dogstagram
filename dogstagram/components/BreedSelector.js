@@ -7,10 +7,11 @@ function BreedSelector(props) {
         listStyle: 'none',
         maxHeight: '250px',
         width: '400px',
-        maxWidth: '300px',
+        maxWidth: '400px',
         overflowY: 'scroll',
         border: '1px solid black',
         borderTop: 'none',
+        fontFamily: 'Roboto'
     }
 
     const [ showList, setShowList ] = useState(false)
@@ -50,7 +51,7 @@ function BreedSelector(props) {
         // }
         console.log(`dog breed after modification ${dogBreed}`)
         const key = process.env.dogAPIkey;
-        let query = 'https://api.thedogapi.com/v1/images/search?limit=10&breed_id=';
+        let query = 'https://api.thedogapi.com/v1/images/search?breed_id=';
         query += dogBreed;
         console.log(query)
         const res = await fetch(query, {
@@ -84,7 +85,7 @@ function BreedSelector(props) {
                                 <li 
                                     value={breed.name}
                                     key={breed.id}
-                                    onClick={e => findBreed(index + 1)}
+                                    onClick={e => findBreed(breed.id)}
                                 >
                                     {breed.name}
                                 </li>
@@ -96,14 +97,14 @@ function BreedSelector(props) {
                 } */}
             </ul>
             {single ? 
-            (
-                <div>
-                    <Post dogs={single}/>
-                </div>
-            ) : (
-                null
-            )
-        }
+                (
+                    <div>
+                        <Post dogs={single}/>
+                    </div>
+                ) : (
+                    null
+                )
+            }
         </div>
     )
 }

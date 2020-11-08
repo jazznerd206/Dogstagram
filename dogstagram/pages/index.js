@@ -9,10 +9,16 @@ import styles from '../styles/Home.module.css';
 const Index = (props) => {
 
   const gridStyle = {
+    paddingTop: '25px',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    textAlign: 'center'
+    justifyContent: 'space-around',
+    textAlign: 'center',
+    background: '	#F5F5F5'
+  }
+  const flexColumn = {
+    width: 'auto',
+    margin: '0 auto'
   }
 
   const [ dogs, setDogs ] = useState([]);
@@ -70,8 +76,12 @@ const Index = (props) => {
 
       <Navbar onClick={loadDogs}/>
       <div className='flexiboi' style={gridStyle}>
-        <Scrollbox dogs={dogs}/>
-        <BreedSelector />
+        <div style={flexColumn}>
+          <Scrollbox dogs={dogs}/>
+        </div>
+        <div style={flexColumn}>
+          <BreedSelector />
+        </div>
       </div>
 
     </div>

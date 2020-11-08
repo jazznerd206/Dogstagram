@@ -1,20 +1,26 @@
+import React, { useState } from 'react';
+
 function Post(props) {
+
+    const [ like, setLike ] = useState(false);
+
     const postContainerStyle = {
         margin: '0 auto',
         width: '400px',
         textAlign: 'left',
         overflow: 'hidden',
         fontFamily: 'Times',
-        border: '1px solid black',
+        border: '.5px solid black',
         paddingTop: '10px',
-        marginBottom: '25px'
+        marginBottom: '25px',
+        backgroundColor: '#FFFFFF'
     }
     const titleContainer = {
         display: 'flex',
         flexDirection: 'row',
         fontFamily: 'Grand Hotel',
         fontSize: 'x-large',
-        paddingLeft: '15px'
+        paddingLeft: '5px'
     }
     const imgContainerStyle = {
         padding: '0 0 10px 0',
@@ -30,21 +36,35 @@ function Post(props) {
     const bottomBar = {
         display: 'flex',
         flexDirection: 'row',
-        paddingLeft: '25px',
+        paddingLeft: '5px',
         width: '100%',
-        background: 'black'
+        // background: 'black'
     }
     const iconStyle = {
         padding: '5px 5px',
-        color: 'white',
-        backgroundColor: 'black',
-        borderRadius: '25px'
+        color: 'black',
+    }
+    const fillStyle = {
+        padding: '5px 5px',
+        color: '#B90E0A',
     }
     const doggieIcon = {
         width: 'auto',
         height: '25px',
         borderRadius: '100%',
         margin: '5px 5px'
+    }
+    const pStyle = {
+        // textTransform: 'lowercase',
+        fontFamily: 'Roboto',
+        padding: '0px 5px'
+    }
+    const toggleLike = () => {
+        if (like === true) {
+            setLike(false);
+        } else if (like === false) {
+            setLike(true)
+        }
     }
     return (
         <div>
@@ -66,12 +86,20 @@ function Post(props) {
                             <div className="post-body" style={postStyle}>
                                 {dog.breeds.map(dog => (
                                     <div key={dog.id} >
-                                        <p>{dog.name}, bred for {dog.bred_for}. Typically {dog.temperament ? (dog.temperament).toString().toLowerCase() : ''}</p>
+                                        <p style={pStyle}>{dog.bred_for}. <strong>Traits:</strong> {dog.temperament ? (dog.temperament).toString().toLowerCase() : ''}</p>
                                     </div>
                                 ))}
                             </div>
                             <div className="bottom-bar" style={bottomBar}>
-                                <i aria-hidden className="fas fa-heart fa-2x" style={iconStyle}></i>
+                                {like === false ? (
+                                    <div>
+                                        <i aria-hidden className="far fa-heart fa-2x" style={iconStyle} onClick={toggleLike}></i>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <i aria-hidden className="fas fa-heart fa-2x" style={fillStyle} onClick={toggleLike}></i>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         

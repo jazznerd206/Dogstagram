@@ -6,7 +6,7 @@ function Scrollbox(props) {
         display: 'flex',
         flexDirection: 'column',
         height: 'auto',
-        width: '850px',
+        width: 'auto',
         margin: '0 auto'
     }
     return (
